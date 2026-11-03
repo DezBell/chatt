@@ -1,0 +1,25 @@
+name = "quiet-chat"
+main = "cloudflare/worker.js"
+compatibility_date = "2026-11-03"
+workers_dev = true
+
+[assets]
+directory = "./cloudflare/public"
+binding = "ASSETS"
+run_worker_first = ["/api/*"]
+
+[observability]
+enabled = true
+
+[durable_objects]
+bindings = [
+  { name = "CHAT_ROOMS", class_name = "ChatRoom" }
+]
+
+[[migrations]]
+tag = "v1"
+new_sqlite_classes = ["ChatRoom"]
+
+[[r2_buckets]]
+binding = "CHAT_FILES"
+bucket_name = "quiet-chat-uploads"

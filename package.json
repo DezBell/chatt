@@ -1,0 +1,12 @@
+{
+  "name": "quiet-chat-cloudflare",
+  "private": true,
+  "scripts": {
+    "build": "node cloudflare/build.mjs",
+    "dev": "npm run build && wrangler dev",
+    "deploy": "npm run build && wrangler deploy"
+  },
+  "devDependencies": {
+    "wrangler": "^4.0.0"
+  }
+}

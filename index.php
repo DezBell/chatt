@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#151a18">
+  <title>Quiet Chat</title>
+  <script>
+    try {
+      if (localStorage.getItem('chat-theme') === 'light') {
+        document.documentElement.dataset.theme = 'light';
+      }
+    } catch {}
+  </script>
+  <link rel="stylesheet" href="styles.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <main class="app-shell">
+    <header class="app-toolbar">
+      <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Switch to light mode">
+        <span aria-hidden="true">☼</span> Light mode
+      </button>
+    </header>
+    <section id="welcome" class="welcome" aria-labelledby="welcome-title">
+      <div class="entry-card">
+        <h1 id="welcome-title">Start a chat</h1>
+        <form id="create-form" class="entry-form">
+          <label for="create-name">Your name</label>
+          <input id="create-name" name="name" maxlength="30" placeholder="e.g. Alex" autocomplete="nickname" required>
+          <button class="button button-primary" type="submit">Create room</button>
+        </form>
+        <div class="divider"><span>or</span></div>
+        <form id="join-form" class="entry-form">
+          <label for="join-name">Your name</label>
+          <input id="join-name" name="name" maxlength="30" placeholder="e.g. Sam" autocomplete="nickname" required>
+          <label for="join-code">Room code</label>
+          <input id="join-code" name="code" maxlength="8" placeholder="8-character code" autocomplete="off" class="code-input" required>
+          <button class="button button-secondary" type="submit">Join room</button>
+        </form>
+        <p id="entry-error" class="error-message" role="alert" hidden></p>
+      </div>
+    </section>
+
+    <section id="conversation" class="conversation" aria-label="Chat room" hidden>
+      <header class="room-header">
+        <div>
+          <a id="back-link" class="back-link" href="#">← Leave</a>
+          <h1 id="room-title">Chat</h1>
+        </div>
+        <div class="room-actions">
+          <div class="invite-code">
+            <span class="invite-label">CODE</span>
+            <strong id="room-code"></strong>
+            <button id="copy-code" class="copy-button" type="button" aria-label="Copy room code">Copy</button>
+          </div>
+          <button id="notification-button" class="notification-button" type="button">Enable notifications</button>
+        </div>
+      </header>
+
+      <div class="chat-panel">
+        <div id="messages" class="messages" role="log" aria-live="polite" aria-relevant="additions text">
+          <div id="empty-state" class="empty-state">
+            <p>No messages yet</p>
+          </div>
+        </div>
+        <form id="message-form" class="message-form">
+          <label class="sr-only" for="message-input">Write a message</label>
+          <div class="attachment-picker">
+            <button id="attach-menu-toggle" class="attach-button" type="button" aria-label="Choose what to attach" aria-haspopup="menu" aria-expanded="false">+</button>
+            <div id="attachment-menu" class="attachment-menu" role="menu" hidden>
+              <button id="choose-photo" type="button" role="menuitem">Photo or image</button>
+              <button id="choose-file" type="button" role="menuitem">Document or file</button>
+            </div>
+          </div>
+          <input id="image-input" type="file" accept="image/jpeg,image/png,image/gif,image/webp" aria-label="Choose a photo or image" hidden>
+          <input id="file-input" type="file" accept="application/pdf,text/plain,text/csv,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" aria-label="Choose a document or file" hidden>
+          <textarea id="message-input" name="message" rows="1" maxlength="2000" placeholder="Message..."></textarea>
+          <button id="send-button" class="send-button" type="submit" aria-label="Send message"><span aria-hidden="true">↑</span></button>
+        </form>
+        <div id="attachment-preview" class="attachment-preview" hidden>
+          <span id="attachment-name"></span>
+          <button id="remove-attachment" type="button" aria-label="Remove attachment">×</button>
+        </div>
+      </div>
+      <p id="room-error" class="error-message room-error" role="alert" hidden></p>
+    </section>
+  </main>
+</body>
+</html>
